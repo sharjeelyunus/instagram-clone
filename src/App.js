@@ -7,6 +7,7 @@ import Modal from '@material-ui/core/Modal';
 import { Button, Input } from '@material-ui/core';
 import InstagramEmbed from 'react-instagram-embed';
 import ImageUpload from './ImageUpload';
+import AddToPhotosIcon from '@material-ui/icons/AddToPhotos';
 
 function getModalStyle() {
   const top = 50;
@@ -36,6 +37,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [open, setOpen] = useState(false);
   const [openSigIn, setOpenSignIn] = useState(false);
+  const [openUpload, setOpenUpload] = useState(false);
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
@@ -151,6 +153,22 @@ function App() {
         </div>
       </Modal>
 
+      <Modal
+        open={openUpload}
+        onClose={() => setOpenUpload(false)}
+      >
+        <div style={modalStyle} className="upload__modal">
+          <center>
+            <img className="app__headerImage" src="https://instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="" />
+          </center>
+          {user?.displayName ? (
+            <ImageUpload username={user.displayName} />
+          ) : (
+            <h3>Login to Upload</h3>
+          )}
+        </div>
+      </Modal>
+
       <div className="app__header">
         <img className="app__headerImage" src="https://instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="" />
 
@@ -190,12 +208,9 @@ function App() {
       </div>
 
 
-
-      {user?.displayName ? (
-        <ImageUpload username={user.displayName} />
-      ) : (
-        <h3>Login to Upload</h3>
-      )}
+      <div className="upload">
+        <AddToPhotosIcon className="upload__button" onClick={() => setOpenUpload(true)} />
+      </div>
     </div>
   );
 }
